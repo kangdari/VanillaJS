@@ -2,6 +2,7 @@ body{
     margin: 0;
     height: 0;
     height: 100%;
+    box-sizing: border-box;
 }
 
 .container{
@@ -24,6 +25,46 @@ body{
 }
 .clockContainer h1{
     color: black;
-    font-size: 4rem;
+    font-size: 6rem;
 }
 
+.todoContainer{
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.todoContainer input{
+    outline: none;
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid black;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.todo{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 1rem;
+    border-bottom: 1px solid grey;
+    display: flex;
+    flex-wrap: wrap;
+}
+.todo.checked p{
+    text-decoration: line-through;
+}
+.todo p{
+    flex: 7;
+    margin: 0;
+    padding-left: 1rem;
+}
+.todo .btn{
+    flex: 1;
+    outline: none;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+}
