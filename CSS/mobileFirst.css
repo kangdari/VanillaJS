@@ -1,0 +1,51 @@
+/* 모바일 우선 */
+/* 768 px 이하 */
+body{
+    box-sizing: border-box;
+}
+
+.container1 div, .container2 div{
+    border: 1px solid grey;
+}
+
+.container1_box:nth-child(1){
+    flex: 1;
+}
+.container1_box:nth-child(2){
+    flex: 2;
+}
+.container1_box:nth-child(3){
+    flex: 1;
+}
+.container1{
+    
+}
+
+.container2{
+    padding-top: 20px;
+}
+
+
+/* 768px 이상에서 적용 */
+@media(min-width: 768px){
+    .container1{
+        display: flex;
+    }
+    .container2{
+        display: flex;
+    }
+    
+}
+
+/* 1024px 이상에서 적용 */
+@media(min-width: 1024px){
+    .container2_aside{
+        flex: 1;
+        margin: 0 25px;
+    }
+    .container2_content{
+        flex: 3;
+        padding: 20px;
+        margin: 0 25px;
+    }
+}
