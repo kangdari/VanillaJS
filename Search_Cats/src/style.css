@@ -1,0 +1,75 @@
+/* 폰트 설정 */
+/* @font-face */
+
+/* Desktop 우선 */
+/* 992px 이상 */
+
+html{
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*::after{
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+
+#App{
+    max-width: 1200px;
+    margin: 1.5em auto;
+}
+
+.SearchBlock{
+    width: 100%;
+}
+
+.SearchInput{
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 2rem;
+    padding: 10px 15px;
+    margin-top: 10px;
+}
+
+.SearchResult{
+    margin-top: 10px;
+    display: grid;
+    /* 4개의 열, 최소 250px 넓이 or 1/4 크기 */
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
+    grid-gap: 10px;
+}
+
+.SearchResult img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 992px 이하 */
+@media screen and (max-width: 992px){
+    .SearchResult{
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+    }
+}
+/* 768px 이하 */
+@media screen and (max-width: 768px){
+    .SearchResult{
+        grid-template-columns: repeat(2, minmax(250px, 1fr));
+    }
+}
+/* 576px 이하*/
+@media screen and (max-width: 576px){
+    .SearchResult{
+        grid-template-columns: repeat(1, minmax(250px, 1fr));
+    }
+}
+/* dark mode */
+@media (prefers-color-scheme: dark){
+    body{
+        color: #ffffff;
+        background: #000000;
+    }
+}

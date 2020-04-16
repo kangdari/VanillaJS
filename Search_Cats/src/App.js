@@ -9,28 +9,43 @@ class App {
   constructor($target) {
     this.$target = $target;
 
+    // ChangeMode 인스턴스 생성
+    this.changeTheme = new ChangeTheme({
+      $target,
+      onClick: (e) => {
+        const body = document.querySelector("body");
+        if (e.target.checked) {
+          body.style.background = "#ffffff";
+          body.style.color = "#000000";
+        } else {
+          body.style.background = "#000000";
+          body.style.color = "#ffffff";
+        }
+      },
+    });
+
     // SearchInput 인스턴스 생성
     this.searchInput = new SearchInput({
       $target,
       onSearch: (keyword) => {
         // 검색 api 실행 후 setState 함수를 실행
-        api.fetchCats(keyword).then(res => this.setState(res.data)) // fetch
+        api.fetchCats(keyword).then((res) => this.setState(res.data)); // fetch
       },
     });
 
     // SearchResult 인스턴스(3개의 인자값)
     this.searchResult = new SearchResult({
       $target,
-      initialData: this.data, 
+      initialData: this.data,
       // 이미지 클릭 이벤트
       // image = 클릭한 고양이의 data
-      onClick: image => {
+      onClick: (image) => {
         // imageInfo가 보이도록 visible 값
         this.imageInfo.setState({
           visible: true,
           image, // 선택한 고양이 data
-        })
-      }
+        });
+      },
     });
 
     // ImageInfo 인스턴스 생성
@@ -39,9 +54,8 @@ class App {
       data: {
         visible: false,
         image: null, // 고양이 data
-      }
-    })
-    
+      },
+    });
   }
 
   // 검색 데이터 결과를 저장하고,
@@ -51,5 +65,4 @@ class App {
     this.searchResult.setState(nextData);
     // console.log(this.data);
   }
-
 }
