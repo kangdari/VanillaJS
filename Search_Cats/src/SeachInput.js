@@ -1,3 +1,4 @@
+// 검색창 input
 class SearchInput {
 
     constructor({ $target, onSearch }){
