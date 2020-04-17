@@ -13,13 +13,11 @@ class App {
     this.changeTheme = new ChangeTheme({
       $target,
       onClick: (e) => {
-        const body = document.querySelector("body");
+        const body = document.body;
         if (e.target.checked) {
-          body.style.background = "#ffffff";
-          body.style.color = "#000000";
+          body.classList.toggle('ligth_mode');
         } else {
-          body.style.background = "#000000";
-          body.style.color = "#ffffff";
+          body.classList.toggle('ligth_mode');
         }
       },
     });
@@ -55,6 +53,12 @@ class App {
         visible: false,
         image: null, // 고양이 data
       },
+      // 모달 닫기 이벤트
+      onClose: () => {
+        this.imageInfo.setState({
+          visible: false,
+        })
+      }
     });
   }
 
