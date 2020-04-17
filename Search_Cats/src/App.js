@@ -36,13 +36,13 @@ class App {
       $target,
       initialData: this.data,
       // 이미지 클릭 이벤트
-      // image = 클릭한 고양이의 data
+      // image = 클릭한 고양이의 data 
       onClick: (image) => {
-        // imageInfo가 보이도록 visible 값
-        this.imageInfo.setState({
+        // 선택한 고양이의 id 값으로 고양이 상세 정보 api(fetchCatInfo) 호출
+        api.fetchCatInfo(image.id).then(({data}) => this.imageInfo.setState({
           visible: true,
-          image, // 선택한 고양이 data
-        });
+          data,
+        }))
       },
     });
 

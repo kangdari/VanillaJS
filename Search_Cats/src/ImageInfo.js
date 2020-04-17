@@ -27,14 +27,11 @@ class ImageInfo {
   }
 
   render() {
-    // 모달? 상세 정보를 보여줌.
-    // 단, visible의 값이 true일 때...
+    // 모달: 고양이 상세 정보를 보여줌.
     if (this.data.visible) {
       this.$imageInfo.style.display = "block";
+      const { name, url, temperament, origin } = this.data.data;
 
-      // temperament 성격, origin 태생을 다른 api를 호출하여 가져와야합니다.
-      const { name, url } = this.data.image;
-      // 보여주기
       this.$imageInfo.innerHTML = `
                 <div class="content_block">
                     <div class="title">
@@ -43,8 +40,8 @@ class ImageInfo {
                     </div>
                     <img src=${url} art=${name}/>
                     <div class="description">
-                        <div>성격: null </div>
-                        <div>태생: null </div>
+                        <div>성격: ${temperament} </div>
+                        <div>태생: ${origin} </div>
                     </div>
                 </div>
             `;
