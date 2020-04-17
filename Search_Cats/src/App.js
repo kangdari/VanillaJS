@@ -3,7 +3,7 @@ console.log("App is running!!!");
 class App {
   $target = null;
   data = [];
-  loading = false;
+  loading = false; // true: 로딩중...
 
   // $target = #App
   constructor($target) {
@@ -26,8 +26,18 @@ class App {
     this.searchInput = new SearchInput({
       $target,
       onSearch: (keyword) => {
+        // setState를 한번 호출해서 
+        // loading 중임을 렌더링...
+        this.setState({
+          data: [],
+          loading: true // 로딩 시작
+        })
         // 검색 api 실행 후 setState 함수를 실행
-        api.fetchCats(keyword).then((res) => this.setState(res.data)); // fetch
+        // api.fetchCats(keyword).then((res) => this.setState(res.data)); // fetch
+        api.fetchCats(keyword).then((res) => this.setState({
+          data: res.data,
+          loading: false, // 로딩 끝
+        })); // fetch
       },
     });
 

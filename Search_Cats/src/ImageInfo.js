@@ -20,9 +20,10 @@ class ImageInfo {
   }
 
   // onClick 메소드에 의해서
-  // vislble 속성과 고양이 data를 전달 받습니다.(nextData)
+  // vislble 속성과 고양이 상세 정보를 전달 받습니다.(nextData)
   setState(nextData) {
     this.data = nextData;
+    // console.log(this.data)
     this.render();
   }
 
