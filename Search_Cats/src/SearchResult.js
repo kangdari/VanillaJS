@@ -16,7 +16,9 @@ class SearchResult {
     this.data = initialData;
     this.onClick = onClick;
 
-    // this.render();
+    // 새로고침 시 기존 데이터 불러오기
+    this.loadData();
+
     console.log(`SearchResult created`, this);
   }
 
@@ -24,7 +26,18 @@ class SearchResult {
   setState(nextData) {
     this.data = nextData.data; // 검색 결과 data
     this.loading = nextData.loading; // loading 여부
+    // 검색한 데이터를 localStorage에 저장
+    localStorage.setItem('data', JSON.stringify(this.data));
     this.render();
+  }
+
+  // 새로고침 시 기존 데이터 
+  loadData(){
+    const data = JSON.parse(localStorage.getItem('data'));
+    // localStorage에 data가 있는 경우에만 렌더링
+    if(data){
+      this.setState({data, loading: false})
+    }
   }
 
   render() {
@@ -38,7 +51,7 @@ class SearchResult {
     // 로딩이 끝나고 && data가 없을 때. (배열의 길이 = 0)
     // 여기서 오류가 발생하네...
     if (!this.loading && !this.data.length) {
-      console.log("검색 결과 없음");
+      console.log("검색 결과 없음"  );
       return this.$searchResult.innerHTML = `
         <div>검색 결과가 없습니다.</div>
       `;
@@ -63,6 +76,8 @@ class SearchResult {
         })
       );
       console.log("로딩 완료");
+
+      
     }
   }
 }

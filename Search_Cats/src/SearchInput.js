@@ -4,7 +4,7 @@ class SearchInput {
   searchWords = [];
 
   constructor({ $target, onSearch }) {
-    const header = document.querySelector('header')
+    const header = document.querySelector("header");
     const $searchInput = document.createElement("input");
     const $serachWords = document.createElement("div");
     this.$searchInput = $searchInput;
@@ -26,39 +26,58 @@ class SearchInput {
     $searchInput.addEventListener("keyup", (e) => {
       if (e.keyCode === 13) {
         // 입력 값이 있을 때 검색
-        if(e.target.value){
+        if (e.target.value) {
           onSearch(e.target.value);
 
           // 최근 검색어 목록에 추가
           this.searchWords.push(e.target.value); // 배열에 추가
-          
+          localStorage.setItem("searchWords", JSON.stringify(this.searchWords));
+
           // 출력된 검색어 초기화
-          while($serachWords.firstChild){
+          while ($serachWords.firstChild) {
             $serachWords.removeChild($serachWords.firstChild);
           }
 
           // 뒤에서 5번째 부터 마지막까지 잘라 출력
-          this.searchWords.slice(-5).map((item, i) => {
-              const word = document.createElement("span");
-              word.className = "searchWord";
-              word.addEventListener('click', (e) => onSearch(e.target.innerText))
-              word.innerText = item;
-              $serachWords.appendChild(word)  
-          })
+          this.searchWords.slice(-5).map((item) => {
+            const word = document.createElement("span");
+            word.className = "searchWord";
+            word.addEventListener("click", (e) => onSearch(e.target.innerText));
+            word.innerText = item;
+            $serachWords.appendChild(word);
+          });
 
           e.target.value = "";
-        }else{
-          console.log('검색어를 입력해주세요.')
+        } else {
+          console.log("검색어를 입력해주세요.");
         }
       }
     });
 
     // input 클릭 시 input 값 초기화
-    $searchInput.addEventListener('click', (e) => {
+    $searchInput.addEventListener("click", (e) => {
       e.target.value = "";
-    })
+    });
+
+    this.loadData(onSearch);
 
     console.log("SearchInput creted", this);
   }
+
+  // 새로고침 시 기존 데이터 불러오기
+  loadData(onSearch) {
+    const LS_words = JSON.parse(localStorage.getItem("searchWords"));
+    if (LS_words) {
+      this.searchWords = this.searchWords.concat(LS_words);
+      this.searchWords.slice(-5).map((item) => {
+        const word = document.createElement("span");
+        word.className = "searchWord";
+        word.addEventListener("click", (e) => onSearch(e.target.innerText));
+        word.innerText = item;
+        document.querySelector(".SearchWords").appendChild(word);
+      });
+    }
+  }
+
   render() {}
 }
