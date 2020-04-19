@@ -3,6 +3,7 @@ class ImageInfo {
   $imageInfo = null;
   data = null;
   onClose = null;
+  loading = false;
 
   constructor({ $target, data, onClose }) {
     const $imageInfo = document.createElement("div");
@@ -28,8 +29,13 @@ class ImageInfo {
   }
 
   render() {
+    // 로딩 중...
+    if(this.data.loading){
+      console.log('고양이 상세 정보 로딩 시작')
+    }
     // 모달: 고양이 상세 정보를 보여줌.
-    if (this.data.visible) {
+    if (!this.data.loading && this.data.visible) {
+      console.log('고양이 상세 정보 로딩 완료')
       this.$imageInfo.style.display = "block";
       const { name, url, temperament, origin } = this.data.data;
 

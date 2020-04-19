@@ -34,6 +34,20 @@ html{
     margin-top: 10px;
 }
 
+.SearchWords{
+    /* margin: 10px 0; */
+    padding: 10px;
+}
+
+.SearchWords .searchWord{
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.SearchWords .searchWord:hover{
+    color: gray
+}
+
 .SearchResult{
     margin-top: 10px;
     display: grid;

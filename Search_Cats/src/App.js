@@ -48,9 +48,15 @@ class App {
       // 이미지 클릭 이벤트
       // image = 클릭한 고양이의 data 
       onClick: (image) => {
+        // loading 시작
+        this.imageInfo.setState({
+          loading: true,
+        })
+
         // 선택한 고양이의 id 값으로 고양이 상세 정보 api(fetchCatInfo) 호출
         api.fetchCatInfo(image.id).then(({data}) => this.imageInfo.setState({
           visible: true,
+          loading: false,
           data,
         }))
       },

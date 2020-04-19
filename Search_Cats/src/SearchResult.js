@@ -36,6 +36,7 @@ class SearchResult {
       `;
     }
     // 로딩이 끝나고 && data가 없을 때. (배열의 길이 = 0)
+    // 여기서 오류가 발생하네...
     if (!this.loading && !this.data.length) {
       console.log("검색 결과 없음");
       return this.$searchResult.innerHTML = `
