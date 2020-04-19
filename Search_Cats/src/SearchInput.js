@@ -6,18 +6,18 @@ class SearchInput {
   constructor({ $target, onSearch }) {
     const header = document.querySelector("header");
     const $searchInput = document.createElement("input");
-    const $serachWords = document.createElement("div");
+    const $searchWords = document.createElement("div");
     this.$searchInput = $searchInput;
     this.$searchInput.placeholder = "고양이를 검색...";
     $searchInput.className = "SearchInput";
-    $serachWords.className = "SearchWords";
+    $searchWords.className = "SearchWords";
 
     // App에 자식 요소로 추가
     // $target.appendChild($searchBlock);
     // $searchBlock.appendChild($searchInput);
 
     header.appendChild($searchInput);
-    header.appendChild($serachWords);
+    header.appendChild($searchWords);
 
     // input에 focus 되도록 설정
     $searchInput.focus();
@@ -34,8 +34,8 @@ class SearchInput {
           localStorage.setItem("searchWords", JSON.stringify(this.searchWords));
 
           // 출력된 검색어 초기화
-          while ($serachWords.firstChild) {
-            $serachWords.removeChild($serachWords.firstChild);
+          while ($searchWords.firstChild) {
+            $searchWords.removeChild($searchWords.firstChild);
           }
 
           // 뒤에서 5번째 부터 마지막까지 잘라 출력
@@ -44,7 +44,7 @@ class SearchInput {
             word.className = "searchWord";
             word.addEventListener("click", (e) => onSearch(e.target.innerText));
             word.innerText = item;
-            $serachWords.appendChild(word);
+            $searchWords.appendChild(word);
           });
 
           e.target.value = "";
