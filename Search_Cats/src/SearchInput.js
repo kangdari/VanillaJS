@@ -2,9 +2,9 @@
 class SearchInput {
   // 검색어 목록
   searchWords = [];
+  onSearch = null;
 
-
-  constructor({ $target, onSearch, onRandomSearch }) {
+  constructor({ $target, onSearch, onRandomSearch, onScrollSearch }) {
     const header = document.querySelector("header");
     const searchBox = document.createElement("div"); 
     const $searchInput = document.createElement("input"); // 검색 입력창
@@ -71,13 +71,15 @@ class SearchInput {
     $searchInput.addEventListener("click", (e) => {
       e.target.value = "";
     });
-
+    
     $randomBtn.addEventListener("click", () => onRandomSearch() )
 
     this.loadData(onSearch);
 
+
     console.log("SearchInput creted", this);
   }
+
 
   // 새로고침 시 기존 데이터 불러오기
   loadData(onSearch) {

@@ -15,9 +15,9 @@ class App {
       onClick: (e) => {
         const body = document.body;
         if (e.target.checked) {
-          body.classList.toggle('ligth_mode');
+          body.classList.toggle('light_mode');
         } else {
-          body.classList.toggle('ligth_mode');
+          body.classList.toggle('light_mode');
         }
       },
     });
@@ -35,6 +35,7 @@ class App {
         // 검색 api 실행 후 setState 함수를 실행
         // api.fetchCats(keyword).then((res) => this.setState(res.data)); // fetch
         api.fetchCats(keyword).then((res) => this.setState({
+          keyword,
           data: res.data,
           loading: false, // 로딩 끝
         })); // fetch
@@ -50,7 +51,7 @@ class App {
           data: res.data,
           loading: false, // 로딩 끝
         }));
-      }
+      },
     });
 
     // SearchResult 인스턴스(3개의 인자값)
@@ -88,6 +89,7 @@ class App {
         })
       }
     });
+
   }
 
   // 검색 데이터 결과를 저장하고,
@@ -99,5 +101,4 @@ class App {
       this.searchResult.setState(nextData);
     }
   }
-  
 }

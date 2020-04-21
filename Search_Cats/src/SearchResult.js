@@ -4,7 +4,7 @@ class SearchResult {
   data = null;
   onClick = null;
   loading = false;
-
+  keyword = "";
 
   // $target = App,
   constructor({ $target, initialData, onClick }) {
@@ -18,26 +18,56 @@ class SearchResult {
 
     // 새로고침 시 기존 데이터 불러오기
     this.loadData();
+    window.addEventListener("scroll", () => this.onScrollSearch(onClick));
 
     console.log(`SearchResult created`, this);
   }
 
   // nextData = 검색 결과
   setState(nextData) {
-    console.log(nextData)
+    console.log(nextData);
     this.data = nextData.data; // 검색 결과 data
     this.loading = nextData.loading; // loading 여부
+    this.keyword = nextData.keyword;
     // 검색한 데이터를 localStorage에 저장
-    localStorage.setItem('data', JSON.stringify(this.data));
+    localStorage.setItem("data", JSON.stringify(this.data));
     this.render();
   }
 
-  // 새로고침 시 기존 데이터 
-  loadData(){
-    const data = JSON.parse(localStorage.getItem('data'));
+  // 새로고침 시 기존 데이터
+  loadData() {
+    const data = JSON.parse(localStorage.getItem("data"));
     // localStorage에 data가 있는 경우에만 렌더링
-    if(data){
-      this.setState({data, loading: false})
+    if (data) {
+      this.setState({ data, loading: false });
+    }
+  }
+
+  // 스크롤이 끝에 위치하면 검색 수행
+  onScrollSearch(onClick) {
+    let scrollLocation = document.documentElement.scrollTop;
+    let windowHeight = window.innerHeight;
+    let fullHeight = document.body.scrollHeight; // margin 값은 포함 x
+
+    // maringBottom: 24px
+    if (scrollLocation + windowHeight >= fullHeight + 24) {
+      api.fetchCats(this.keyword).then(({ data }) => {
+        if (data) {
+          this.$searchResult.innerHTML += data
+            .map(
+              (cat) => `
+          <article class="item"><img src=${cat.url} alt=${cat.name}/></article>
+        `
+            )
+            .join(""); // join()를 사용해 하나의 값을 바꿔줘야 , 출력을 안함.
+
+          // data.map(cat => {
+          //   $searchResult.innerHTML += `
+          //     <article class=${cat.name}><img src=${cat.url} alt=${cat.name}/></article>
+          //   `
+          // });
+        }
+      });
     }
   }
 
@@ -52,12 +82,12 @@ class SearchResult {
     // 로딩이 끝나고 && data가 없을 때. (배열의 길이 = 0)
     // 여기서 오류가 발생하네...
     if (!this.loading && !this.data.length) {
-      console.log("검색 결과 없음"  );
-      return this.$searchResult.innerHTML = `
+      console.log("검색 결과 없음");
+      return (this.$searchResult.innerHTML = `
         <div>검색 결과가 없습니다.</div>
-      `;
+      `);
     }
-    // 로딩이 끝나고 data가 있을 때 
+    // 로딩이 끝나고 data가 있을 때
     if (!this.loading && !!this.data.length) {
       this.$searchResult.innerHTML = this.data
         .map(
@@ -77,8 +107,6 @@ class SearchResult {
         })
       );
       console.log("로딩 완료");
-
-      
     }
   }
 }
