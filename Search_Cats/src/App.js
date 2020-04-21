@@ -39,6 +39,18 @@ class App {
           loading: false, // 로딩 끝
         })); // fetch
       },
+      // 랜덤 api 호출
+      onRandomSearch: () => {
+        // loading 중임을 렌더링...
+        this.setState({
+          data: [],
+          loading: true // 로딩 시작
+        })
+        api.fetchRandomCats().then(res => this.setState({
+          data: res.data,
+          loading: false, // 로딩 끝
+        }));
+      }
     });
 
     // SearchResult 인스턴스(3개의 인자값)
@@ -81,8 +93,11 @@ class App {
   // 검색 데이터 결과를 저장하고,
   // searchResult 인스턴스에 데이터 저장
   setState(nextData) {
-    this.data = nextData;
-    this.searchResult.setState(nextData);
-    // console.log(this.data);
+    // 오류 방지를 위해 if문 추가
+    if(nextData.data !== undefined){
+      this.data = nextData;
+      this.searchResult.setState(nextData);
+    }
   }
+  
 }

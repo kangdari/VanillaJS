@@ -22,16 +22,22 @@ html{
     margin: 1.5em auto;
 }
 
-.SearchBlock{
-    width: 100%;
+.SearchBox{
+    display: flex;
 }
 
-.SearchInput{
-    width: 100%;
+.SearchBox .SearchInput{
+    width: 190%;
     box-sizing: border-box;
     font-size: 2rem;
     padding: 10px 15px;
-    margin-top: 10px;
+    /* margin-top: 10px; */
+}
+
+.SearchBox button{
+    margin-left: 5px;
+    padding: 10px;
+    font-size: 1rem;
 }
 
 .SearchWords{

@@ -24,6 +24,7 @@ class SearchResult {
 
   // nextData = 검색 결과
   setState(nextData) {
+    console.log(nextData)
     this.data = nextData.data; // 검색 결과 data
     this.loading = nextData.loading; // loading 여부
     // 검색한 데이터를 localStorage에 저장

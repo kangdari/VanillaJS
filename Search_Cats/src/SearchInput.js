@@ -3,27 +3,40 @@ class SearchInput {
   // 검색어 목록
   searchWords = [];
 
-  constructor({ $target, onSearch }) {
+
+  constructor({ $target, onSearch, onRandomSearch }) {
     const header = document.querySelector("header");
-    const $searchInput = document.createElement("input");
-    const $searchWords = document.createElement("div");
+    const searchBox = document.createElement("div"); 
+    const $searchInput = document.createElement("input"); // 검색 입력창
+    const $searchWords = document.createElement("div"); // 최근 검색어 목록
+    const $randomBtn = document.createElement("button");
     this.$searchInput = $searchInput;
     this.$searchInput.placeholder = "고양이를 검색...";
+    searchBox.className = "SearchBox";
     $searchInput.className = "SearchInput";
     $searchWords.className = "SearchWords";
+    $randomBtn.innerText = "Random";
 
     // App에 자식 요소로 추가
     // $target.appendChild($searchBlock);
     // $searchBlock.appendChild($searchInput);
 
-    header.appendChild($searchInput);
+    searchBox.appendChild($searchInput);
+    searchBox.appendChild($randomBtn)
+
+    // header.appendChild($searchInput);
+    // header.appendChild($randomBtn);
+    header.appendChild(searchBox);
     header.appendChild($searchWords);
+
+    
 
     // input에 focus 되도록 설정
     $searchInput.focus();
 
     // 엔터를 누르면 onSearch 함수 수행
-    $searchInput.addEventListener("keyup", (e) => {
+    // keyup => keypress
+    $searchInput.addEventListener("keypress", (e) => {
       if (e.keyCode === 13) {
         // 입력 값이 있을 때 검색
         if (e.target.value) {
@@ -58,6 +71,8 @@ class SearchInput {
     $searchInput.addEventListener("click", (e) => {
       e.target.value = "";
     });
+
+    $randomBtn.addEventListener("click", () => onRandomSearch() )
 
     this.loadData(onSearch);
 
