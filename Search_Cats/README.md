@@ -46,3 +46,42 @@
 ### 스크롤 페이징 구현
 * 검색 결과 화면에서 유저가 브라우저 스크롤 바를 끝까지 이동시켰을 경우, 그 다음 페이지를 로딩하도록 만들어야 합니다. 
     페이지 로딩 api를 몰라서 같은 키워드로 검색하여 추가 렌더링하는 방식으로 구현(클릭 이벤트 구현x) (**50% 구현**)
+
+### 코드 구조 관련
+
+* ES6 module 형태로 코드를 변경합니다.
+
+    * `webpack` , `parcel` 과 같은 번들러를 사용하지 말아주세요.
+
+    * 해당 코드 실행을 위해서는 `http-server` 모듈을(로컬 서버를 띄우는 다른 모듈도 사용 가능) 통해 `index.html` 을 띄워야 합니다. (**구현**)   
+        `$ npm install http-server` 설치 후 index.html이 있는 디렉토리에서 `http-server ./` 명령어 실행
+
+* API fetch 코드를 `async` , `await` 문을 이용하여 수정해주세요. 해당 코드들은 에러가 났을 경우를 대비해서 적절히 처리가 되어있어야 합니다. (**구현**)
+
+* **`필수`** API 의 status code 에 따라 에러 메시지를 분리하여 작성해야 합니다. 아래는 예시입니다. (**구현**)
+    try-catch문을 이용하여 에러핸들링을 하도록 작성했다가 status code에 따라 에러 메시지를 분기처리함.
+
+
+```
+  const request = async (url: string) => {
+    try {
+      const result = await fetch(url);
+      return result.json();
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
+  const api = {
+    fetchGif: keyword => {
+      return request(`${API_ENDPOINT}/api/gif/search?q=${keyword}`);
+    },
+    fetchGifAll: () => {
+      return request(`${API_ENDPOINT}/api/gif/all`);
+    }
+  };
+```
+
+* SearchResult 에 각 아이템을 클릭하는 이벤트를 Event Delegation 기법을 이용해 수정해주세요.
+
+* 컴포넌트 내부의 함수들이나 Util 함수들을 작게 잘 나누어주세요.
