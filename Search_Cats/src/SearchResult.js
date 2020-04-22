@@ -10,6 +10,7 @@ class SearchResult {
   constructor({ $target, initialData, onClick }) {
     this.$searchResult = document.createElement("section");
     this.$searchResult.className = "SearchResult";
+    this.$searchResult.addEventListener("click", (e) => this.Click(e.target));
 
     $target.appendChild(this.$searchResult);
 
@@ -18,7 +19,7 @@ class SearchResult {
 
     // 새로고침 시 기존 데이터 불러오기
     this.loadData();
-    window.addEventListener("scroll", () => this.onScrollSearch(onClick));
+    window.addEventListener("scroll", () => this.onScrollSearch());
 
     console.log(`SearchResult created`, this);
   }
@@ -44,7 +45,7 @@ class SearchResult {
   }
 
   // 스크롤이 끝에 위치하면 검색 수행
-  onScrollSearch(onClick) {
+  onScrollSearch() {
     let scrollLocation = document.documentElement.scrollTop;
     let windowHeight = window.innerHeight;
     let fullHeight = document.body.scrollHeight; // margin 값은 포함 x
@@ -56,7 +57,7 @@ class SearchResult {
           this.$searchResult.innerHTML += data
             .map(
               (cat) => `
-          <article class="item"><img src=${cat.url} alt=${cat.name}/></article>
+          <article class="item"><img id=${cat.id} src=${cat.url} alt=${cat.name}/></article>
         `
             )
             .join(""); // join()를 사용해 하나의 값을 바꿔줘야 , 출력을 안함.
@@ -71,10 +72,17 @@ class SearchResult {
     }
   }
 
+  Click = (target) => {
+    if (target && target.tagName === "IMG") {
+      this.onClick(target.id);
+    }
+  };
+
   render() {
     // 로딩 중...
     if (this.loading) {
       console.log("로딩 중...");
+      // 이벤트 제거
       this.$searchResult.innerHTML = `
         <div>로딩 중...</div>
       `;
@@ -93,20 +101,20 @@ class SearchResult {
         .map(
           (cat) => `
         <article class="item">
-            <img src=${cat.url} alt=${cat.name}/>
+            <img id=${cat.id} src=${cat.url} alt=${cat.name}/>
         </article>
       `
         )
         .join(""); // join 함수를 이용해 배열 요소들을 하나의 값으로 변환
 
-      this.$searchResult.querySelectorAll(".item").forEach((item, i) =>
-        item.addEventListener("click", (e) => {
-          // 선택한 이미지를 onClick의 인자 값으로 전달하여
-          // onClick 함수에서 visibe 값을 설정
-          this.onClick(this.data[i]);
-        })
-      );
-      console.log("로딩 완료");
+      // Event Delegation(이벤트 위임) 기법 사용, img들의 상위 요소에 이벤트핸들러 작성
+      // this.$searchResult.addEventListener("click", (e) => {
+      //   if (e.target.tagName === "IMG") {
+      //     console.log("click");
+      //     this.onClick(e.target.id);
+      //   }
+      // });
     }
+    console.log("로딩 완료");
   }
 }

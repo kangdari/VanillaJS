@@ -82,6 +82,11 @@
   };
 ```
 
-* SearchResult 에 각 아이템을 클릭하는 이벤트를 Event Delegation 기법을 이용해 수정해주세요.
+* SearchResult 에 각 아이템을 클릭하는 이벤트를 Event Delegation 기법을 이용해 수정해주세요. (**구현**)
+
+render() 함수 내부에서 SearchResult에 click 이벤트를 등록하면 이벤트가 중복 등록되기 때문에
+constructor에서 click 이벤트를 등록했다.  
+
+Event Delegation : 하위 요소에 이벤트를 등록하지 않고 상위 요소에 이벤트를 등록하여 하위 요소의 이벤트를 제어 하는 방식
 
 * 컴포넌트 내부의 함수들이나 Util 함수들을 작게 잘 나누어주세요.
